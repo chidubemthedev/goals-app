@@ -10,16 +10,13 @@ import {
 } from "react-native";
 
 export default function Index() {
-  const [goals, setGoals] = useState<{ text: string; key: string }[]>([]);
+  const [goals, setGoals] = useState<string[]>([]);
   const [text, setText] = useState<string>("");
   const goalInputHandler = (goal: string) => {
     setText(goal);
   };
   const addGoalHandler = () => {
-    setGoals((currentGoals) => [
-      ...currentGoals,
-      { text: text, key: Math.random().toString() },
-    ]);
+    setGoals((currentGoals) => [...currentGoals, text]);
     console.log(goals);
   };
   return (
@@ -39,10 +36,11 @@ export default function Index() {
           renderItem={(itemData) => {
             return (
               <View style={styles.goalItem}>
-                <Text>{itemData.item.text}</Text>
+                <Text>{itemData.item}</Text>
               </View>
             );
           }}
+          keyExtractor={(item, index) => item + index}
           alwaysBounceVertical={true}
         />
       </View>
