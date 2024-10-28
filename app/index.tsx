@@ -1,13 +1,7 @@
+import GoalInput from "@/components/GoalInput";
+import GoalItem from "@/components/GoalItem";
 import { useState } from "react";
-import {
-  Button,
-  FlatList,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
 
 export default function Index() {
   const [goals, setGoals] = useState<string[]>([]);
@@ -21,25 +15,15 @@ export default function Index() {
   };
   return (
     <View style={styles.container}>
-      <View style={styles.inputContainer}>
-        <TextInput
-          onChangeText={goalInputHandler}
-          style={styles.textInput}
-          placeholder="Enter a Goal"
-        />
-        <Button onPress={addGoalHandler} title="Add Goal" />
-      </View>
+      <GoalInput
+        goalInputHandler={goalInputHandler}
+        addGoalHandler={addGoalHandler}
+      />
 
       <View style={styles.goalsContainer}>
         <FlatList
           data={goals}
-          renderItem={(itemData) => {
-            return (
-              <View style={styles.goalItem}>
-                <Text>{itemData.item}</Text>
-              </View>
-            );
-          }}
+          renderItem={(itemData) => <GoalItem goal={itemData.item} />}
           keyExtractor={(item, index) => item + index}
           alwaysBounceVertical={true}
         />
@@ -50,33 +34,8 @@ export default function Index() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 20 },
-  inputContainer: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    gap: 10,
-    borderBottomColor: "#cccccc",
-    borderBottomWidth: 1,
-    paddingBottom: 30,
-  },
-  textInput: {
-    flex: 1,
-    borderColor: "#cccccc",
-    borderWidth: 1,
-    borderRadius: 5,
-    padding: 5,
-  },
   goalsContainer: {
     flex: 8,
     marginTop: 20,
-  },
-  goalItem: {
-    padding: 10,
-    marginVertical: 8,
-    backgroundColor: "#cccccc",
-    borderColor: "#cccccc",
-    borderWidth: 1,
-    borderRadius: 5,
   },
 });
