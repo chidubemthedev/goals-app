@@ -14,6 +14,14 @@ export default function Index() {
     setText("");
     console.log(goals);
   };
+  const onDeleteGoal = (index: number) => {
+    setGoals((currentGoals) => {
+      return currentGoals.filter(
+        (item) => currentGoals.indexOf(item) !== index
+      );
+    });
+  };
+
   return (
     <View style={styles.container}>
       <GoalInput
@@ -25,7 +33,13 @@ export default function Index() {
       <View style={styles.goalsContainer}>
         <FlatList
           data={goals}
-          renderItem={(itemData) => <GoalItem goal={itemData.item} />}
+          renderItem={(itemData) => (
+            <GoalItem
+              goal={itemData.item}
+              goals={goals}
+              onDeleteGoal={onDeleteGoal}
+            />
+          )}
           keyExtractor={(item, index) => item + index}
           alwaysBounceVertical={true}
         />
