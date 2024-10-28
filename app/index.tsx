@@ -11,6 +11,7 @@ export default function Index() {
   };
   const addGoalHandler = () => {
     setGoals((currentGoals) => [...currentGoals, text]);
+    setText("");
     console.log(goals);
   };
   return (
@@ -18,6 +19,7 @@ export default function Index() {
       <GoalInput
         goalInputHandler={goalInputHandler}
         addGoalHandler={addGoalHandler}
+        goal={text}
       />
 
       <View style={styles.goalsContainer}>
